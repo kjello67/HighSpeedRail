@@ -1,4 +1,4 @@
-"St.num.";"Station name";"St.num.";"Station name";"Reise Tid";"Billetpris Forerningsreisende";"Bilettpris fritidsreiser";"Antall avganger per rerning";"Antall togbytter";"Avstand";"Comment"
+"St.num.";"Station name";"St.num.";"Station name";"Reise Tid";"Billettpris Forretningsreisende";"Bilettpris fritidsreiser";"Antall avganger per retning";"Antall togbytter";"Avstand";"Comment"
 1;"Bergen";2;"Arna";5,22208333333333;69,9;41,94;72;0;9,35;
 1;"Bergen";3;"Tysse";13,3445166666667;120,271;72,1626;36;0;26,926;
 1;"Bergen";4;"Kvam-Jondal";21,99145;201,975;121,185;36;0;54,342;

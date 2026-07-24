@@ -208,10 +208,43 @@ function showRow(row, isReverse) {
     if (IGNORED_FIELDS.has(key)) {
       return;
     }
-    addResultRow(label, row[key] || "-");
+    addResultRow(label, formatDisplayValue(key, row[key]));
   });
 
   els.table.classList.remove("hidden");
+}
+
+function formatDisplayValue(key, value) {
+  if (key === "travelTime") {
+    return formatMinutesAsHoursMinutes(value);
+  }
+  return value || "-";
+}
+
+function formatMinutesAsHoursMinutes(rawValue) {
+  if (!rawValue) {
+    return "-";
+  }
+
+  const normalized = String(rawValue).replace(",", ".");
+  const totalMinutes = Math.round(Number(normalized));
+
+  if (!Number.isFinite(totalMinutes)) {
+    return rawValue;
+  }
+
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  if (hours === 0) {
+    return `${minutes} min`;
+  }
+
+  if (minutes === 0) {
+    return `${hours} h`;
+  }
+
+  return `${hours} h ${minutes} min`;
 }
 
 function addResultRow(label, value) {
