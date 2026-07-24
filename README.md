@@ -1,18 +1,18 @@
-# HSR Station Lookup (GitHub Pages)
+# HSR Stasjonssøk (GitHub Pages)
 
-Static frontend app where user selects:
-- from station
-- to station
+Statisk frontend-app der brukeren velger:
+- fra stasjon
+- til stasjon
 
-The app then shows all other values from the matching CSV row.
+Appen viser deretter alle andre verdier fra den matchende CSV-raden.
 
-## Features
+## Funksjoner
 
-- Works fully in browser (no backend)
-- Auto-loads bundled `data/HsrTimeDist.csv`
-- Handles semicolon-separated CSV with quoted values
+- Fungerer helt i nettleseren (ingen backend)
+- Laster automatisk vedlagt `data/HsrTimeDist.csv`
+- Håndterer semikolonseparert CSV med siterte verdier
 
-## Files
+## Filer
 
 - `index.html`
 - `styles.css`
@@ -20,25 +20,25 @@ The app then shows all other values from the matching CSV row.
 - `data/HsrTimeDist.csv`
 - `.github/workflows/pages.yml`
 
-## Local run
+## Lokal kjøring
 
-You can open `index.html` directly in a browser.
+Du kan åpne `index.html` direkte i en nettleser.
 
-Or run a simple static server:
+Eller kjør en enkel statisk server:
 
 ```powershell
 npx --yes serve .
 ```
 
-## Publish as standalone GitHub repository
+## Publiser som frittstående GitHub-repositorium
 
-1. Create a new empty GitHub repository (for example `hsr-station-pages`).
-2. Copy these files into that repository.
-3. Push your code.
-4. In GitHub: **Settings -> Pages** and set source to **GitHub Actions**.
-5. The included workflow deploys automatically on pushes to `main`.
+1. Opprett et nytt tomt GitHub-repositorium (for eksempel `hsr-station-pages`).
+2. Kopier disse filene inn i repositoriet.
+3. Push koden din.
+4. I GitHub: **Settings -> Pages** og sett kilde til **GitHub Actions**.
+5. Den medfølgende workflowen publiserer automatisk ved push til `main`.
 
-## Notes
+## Merknader
 
-- The app loads `./data/HsrTimeDist.csv` on startup.
+- Appen laster `./data/HsrTimeDist.csv` ved oppstart.
 

@@ -1,15 +1,15 @@
 const DEFAULT_FIELDS = [
-  ["fromStationNumber", "From station number"],
-  ["fromStationName", "From station"],
-  ["toStationNumber", "To station number"],
-  ["toStationName", "To station"],
+  ["fromStationNumber", "Fra stasjonsnummer"],
+  ["fromStationName", "Fra stasjon"],
+  ["toStationNumber", "Til stasjonsnummer"],
+  ["toStationName", "Til stasjon"],
   ["travelTime", "Reise Tid"],
   ["ticketPriceBusiness", "Billetpris Forerningsreisende"],
   ["ticketPriceLeisure", "Bilettpris fritidsreiser"],
   ["departuresPerDirection", "Antall avganger per rerning"],
   ["interchanges", "Antall togbytter"],
   ["distance", "Avstand"],
-  ["comment", "Comment"]
+  ["comment", "Kommentar"]
 ];
 
 const HEADER_ALIASES = {
@@ -59,13 +59,13 @@ async function init() {
   els.to.addEventListener("change", onSelectionChanged);
   resetSelectors();
 
-  setStatus("Loading bundled CSV...");
+  setStatus("Laster vedlagt CSV...");
 
   try {
     const text = await fetchDefaultCsv();
     hydrateFromCsvText(text, "bundled HsrTimeDist.csv");
   } catch (error) {
-    setStatus(`Could not auto-load ${DEFAULT_CSV_PATH}. (${error.message})`);
+    setStatus(`Kunne ikke laste ${DEFAULT_CSV_PATH} automatisk. (${error.message})`);
   }
 }
 
@@ -84,17 +84,17 @@ function hydrateFromCsvText(text, sourceName) {
   resetSelectors();
 
   if (!rows.length) {
-    setStatus(`No usable rows found in ${sourceName}.`);
+    setStatus(`Fant ingen brukbare rader i ${sourceName}.`);
     return;
   }
 
   const stations = getUniqueStations(rows);
-  fillSelect(els.from, stations, "Select from station");
-  fillSelect(els.to, stations, "Select to station");
+  fillSelect(els.from, stations, "Velg fra stasjon");
+  fillSelect(els.to, stations, "Velg til stasjon");
 
   els.from.disabled = false;
   els.to.disabled = false;
-  setStatus(`Loaded ${rows.length} routes from ${sourceName}.`);
+  setStatus(`Lastet ${rows.length} ruter fra ${sourceName}.`);
 }
 
 function parseDataRows(csvText) {
@@ -119,7 +119,7 @@ function buildFieldsFromHeader(headers) {
   const usedKeys = new Set();
 
   return headers.map((header, index) => {
-    const safeLabel = header || `Column ${index + 1}`;
+    const safeLabel = header || `Kolonne ${index + 1}`;
     const key = ensureUniqueKey(resolveFieldKey(safeLabel, index), index, usedKeys);
     return [key, safeLabel];
   });
@@ -251,13 +251,13 @@ function onSelectionChanged() {
   const to = els.to.value;
 
   if (!from || !to) {
-    setStatus("Choose both stations to see route details.");
+    setStatus("Velg begge stasjoner for å se rutedetaljer.");
     clearTable();
     return;
   }
 
   if (from === to) {
-    setStatus("Please choose two different stations.");
+    setStatus("Velg to forskjellige stasjoner.");
     clearTable();
     return;
   }
@@ -265,12 +265,12 @@ function onSelectionChanged() {
   const exact = rows.find((row) => row.fromStationName === from && row.toStationName === to);
 
   if (exact) {
-    setStatus(`Showing route ${from} -> ${to}`);
+    setStatus(`Viser rute ${from} -> ${to}`);
     showRow(exact);
     return;
   }
 
-  setStatus(`No route found for ${from} -> ${to}.`);
+  setStatus(`Fant ingen rute for ${from} -> ${to}.`);
   clearTable();
 }
 
@@ -321,10 +321,10 @@ function formatMinutesAsHoursMinutes(rawValue) {
   }
 
   if (minutes === 0) {
-    return `${hours} h`;
+    return `${hours} t`;
   }
 
-  return `${hours} h ${minutes} min`;
+  return `${hours} t ${minutes} min`;
 }
 
 function parseCsvNumber(rawValue) {
@@ -392,8 +392,8 @@ function clearTable() {
 }
 
 function resetSelectors() {
-  fillSelect(els.from, [], "Select from station");
-  fillSelect(els.to, [], "Select to station");
+  fillSelect(els.from, [], "Velg fra stasjon");
+  fillSelect(els.to, [], "Velg til stasjon");
   els.from.disabled = true;
   els.to.disabled = true;
   clearTable();

@@ -1,37 +1,37 @@
 <!doctype html>
-<html lang="en">
+<html lang="nb">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HSR Station Lookup</title>
+  <title>HSR Stasjonssøk</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="container">
-    <h1>HSR Station Lookup</h1>
-    <p class="subtitle">Select from/to station to show route values from the CSV row.</p>
+    <h1>HSR Stasjonssøk</h1>
+    <p class="subtitle">Velg fra-/til-stasjon for å vise ruteverdier fra CSV-raden.</p>
 
     <section class="card controls">
 
       <div class="field">
-        <label for="fromStation">From station</label>
+        <label for="fromStation">Fra stasjon</label>
         <select id="fromStation" disabled>
-          <option>Loading stations...</option>
+          <option>Laster stasjoner...</option>
         </select>
       </div>
 
       <div class="field">
-        <label for="toStation">To station</label>
+        <label for="toStation">Til stasjon</label>
         <select id="toStation" disabled>
-          <option>Loading stations...</option>
+          <option>Laster stasjoner...</option>
         </select>
       </div>
 
     </section>
 
     <section class="card">
-      <h2>Route details</h2>
-      <p id="status" class="status">Loading bundled CSV...</p>
+      <h2>Rutedetaljer</h2>
+      <p id="status" class="status">Laster vedlagt CSV...</p>
       <table id="resultTable" class="hidden">
         <tbody></tbody>
       </table>
