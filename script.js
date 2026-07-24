@@ -3,14 +3,12 @@ const CANONICAL_FIELDS = [
   ["fromStationName", "From station"],
   ["toStationNumber", "To station number"],
   ["toStationName", "To station"],
-  ["time1", "Time1"],
-  ["time2", "Time2"],
-  ["blank6", "0"],
-  ["ticketWo", "Ticket Wo"],
-  ["ticketNw", "Ticket Nw"],
-  ["service", "Serv."],
-  ["interchange", "Interch."],
-  ["distReal", "Dist. real"],
+  ["travelTime", "Reise Tid"],
+  ["ticketPriceBusiness", "Billetpris Forerningsreisende"],
+  ["ticketPriceLeisure", "Bilettpris fritidsreiser"],
+  ["departuresPerDirection", "Antall avganger per rerning"],
+  ["interchanges", "Antall togbytter"],
+  ["distance", "Avstand"],
   ["comment", "Comment"]
 ];
 
@@ -18,8 +16,7 @@ const IGNORED_FIELDS = new Set([
   "fromStationNumber",
   "fromStationName",
   "toStationNumber",
-  "toStationName",
-  "blank6"
+  "toStationName"
 ]);
 
 const DEFAULT_CSV_PATH = "./data/HsrTimeDist.csv";
@@ -246,4 +243,3 @@ function resetSelectors() {
 function setStatus(message) {
   els.status.textContent = message;
 }
-
