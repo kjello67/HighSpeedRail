@@ -39,6 +39,18 @@ h1 {
   font-weight: 700;
 }
 
+.cover-header {
+  display: block;
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  margin: 0 0 12px;
+  background: #d8e7ee;
+}
+
 .subtitle {
   margin: 0 0 18px;
   color: var(--muted);
