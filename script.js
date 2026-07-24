@@ -44,7 +44,6 @@ const DEFAULT_CSV_PATH = "./data/HsrTimeDist.csv";
 const els = {
   from: document.getElementById("fromStation"),
   to: document.getElementById("toStation"),
-  reverse: document.getElementById("showReverse"),
   status: document.getElementById("status"),
   table: document.getElementById("resultTable"),
   tbody: document.querySelector("#resultTable tbody")
@@ -58,7 +57,6 @@ init();
 async function init() {
   els.from.addEventListener("change", onSelectionChanged);
   els.to.addEventListener("change", onSelectionChanged);
-  els.reverse.addEventListener("change", onSelectionChanged);
   resetSelectors();
 
   setStatus("Loading bundled CSV...");
@@ -268,29 +266,17 @@ function onSelectionChanged() {
 
   if (exact) {
     setStatus(`Showing route ${from} -> ${to}`);
-    showRow(exact, false);
+    showRow(exact);
     return;
-  }
-
-  if (els.reverse.checked) {
-    const reverse = rows.find((row) => row.fromStationName === to && row.toStationName === from);
-    if (reverse) {
-      setStatus(`No exact route found. Showing reverse route ${to} -> ${from}.`);
-      showRow(reverse, true);
-      return;
-    }
   }
 
   setStatus(`No route found for ${from} -> ${to}.`);
   clearTable();
 }
 
-function showRow(row, isReverse) {
+function showRow(row) {
   els.tbody.innerHTML = "";
 
-  if (isReverse) {
-    addResultRow("Note", "Reverse route displayed");
-  }
 
   activeFields.forEach(([key, label]) => {
     if (IGNORED_FIELDS.has(key)) {
@@ -305,6 +291,12 @@ function showRow(row, isReverse) {
 function formatDisplayValue(key, value) {
   if (key === "travelTime") {
     return formatMinutesAsHoursMinutes(value);
+  }
+  if (key === "ticketPriceBusiness" || key === "ticketPriceLeisure") {
+    return formatCurrencyNok(value);
+  }
+  if (key === "distance") {
+    return formatDistanceKm(value);
   }
   return value || "-";
 }
@@ -333,6 +325,52 @@ function formatMinutesAsHoursMinutes(rawValue) {
   }
 
   return `${hours} h ${minutes} min`;
+}
+
+function parseCsvNumber(rawValue) {
+  if (rawValue === null || rawValue === undefined || rawValue === "") {
+    return null;
+  }
+
+  const normalized = String(rawValue).replace(/\s+/g, "").replace(",", ".");
+  const parsed = Number(normalized);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function formatCurrencyNok(rawValue) {
+  if (!rawValue) {
+    return "-";
+  }
+
+  const value = parseCsvNumber(rawValue);
+  if (value === null) {
+    return rawValue;
+  }
+
+  const formatted = new Intl.NumberFormat("nb-NO", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(value);
+
+  return `${formatted} kr`;
+}
+
+function formatDistanceKm(rawValue) {
+  if (!rawValue) {
+    return "-";
+  }
+
+  const value = parseCsvNumber(rawValue);
+  if (value === null) {
+    return rawValue;
+  }
+
+  const formatted = new Intl.NumberFormat("nb-NO", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 3
+  }).format(value);
+
+  return `${formatted} km`;
 }
 
 function addResultRow(label, value) {

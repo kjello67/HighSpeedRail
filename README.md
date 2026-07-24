@@ -11,7 +11,6 @@ The app then shows all other values from the matching CSV row.
 - Works fully in browser (no backend)
 - Auto-loads bundled `data/HsrTimeDist.csv`
 - Handles semicolon-separated CSV with quoted values
-- Optional reverse-route lookup when exact row is missing
 
 ## Files
 
