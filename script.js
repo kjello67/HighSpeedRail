@@ -3,8 +3,8 @@ const DEFAULT_FIELDS = [
   ["fromStationName", "Fra stasjon"],
   ["toStationNumber", "Til stasjonsnummer"],
   ["toStationName", "Til stasjon"],
-  ["travelTime", "Reise Tid"],
-  ["ticketPriceBusiness", "Billetpris Forerningsreisende"],
+  ["travelTime", "Reisetid"],
+  ["ticketPriceBusiness", "Billettpris Forretningsreiser"],
   ["ticketPriceLeisure", "Bilettpris fritidsreiser"],
   ["departuresPerDirection", "Antall avganger per rerning"],
   ["interchanges", "Antall togbytter"],
@@ -13,10 +13,11 @@ const DEFAULT_FIELDS = [
 ];
 
 const HEADER_ALIASES = {
-  travelTime: ["reise tid", "travel time", "time1", "time base"],
+  travelTime: ["reise tid", "reisetid", "travel time", "time1", "time base"],
   ticketPriceBusiness: [
     "billetpris forerningsreisende",
     "billettpris forretningsreisende",
+    "billettpris forretningsreiser",
     "ticket wo"
   ],
   ticketPriceLeisure: ["bilettpris fritidsreiser", "ticket nw"],
