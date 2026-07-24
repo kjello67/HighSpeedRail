@@ -1,4 +1,4 @@
-const CANONICAL_FIELDS = [
+const DEFAULT_FIELDS = [
   ["fromStationNumber", "From station number"],
   ["fromStationName", "From station"],
   ["toStationNumber", "To station number"],
@@ -11,6 +11,26 @@ const CANONICAL_FIELDS = [
   ["distance", "Avstand"],
   ["comment", "Comment"]
 ];
+
+const HEADER_ALIASES = {
+  travelTime: ["reise tid", "travel time", "time1", "time base"],
+  ticketPriceBusiness: [
+    "billetpris forerningsreisende",
+    "billettpris forretningsreisende",
+    "ticket wo"
+  ],
+  ticketPriceLeisure: ["bilettpris fritidsreiser", "ticket nw"],
+  departuresPerDirection: [
+    "antall avganger per rerning",
+    "antall avganger per retning",
+    "serv"
+  ],
+  interchanges: ["antall togbytter", "interch", "interchange"],
+  distance: ["avstand", "dist real", "distance"],
+  comment: ["comment"]
+};
+
+const HEADER_KEY_BY_NORMALIZED = buildHeaderKeyMap();
 
 const IGNORED_FIELDS = new Set([
   "fromStationNumber",
@@ -31,6 +51,7 @@ const els = {
 };
 
 let rows = [];
+let activeFields = DEFAULT_FIELDS;
 
 init();
 
@@ -59,7 +80,9 @@ async function fetchDefaultCsv() {
 }
 
 function hydrateFromCsvText(text, sourceName) {
-  rows = parseDataRows(text);
+  const parsed = parseDataRows(text);
+  rows = parsed.rows;
+  activeFields = parsed.fields;
   resetSelectors();
 
   if (!rows.length) {
@@ -79,14 +102,79 @@ function hydrateFromCsvText(text, sourceName) {
 function parseDataRows(csvText) {
   const lines = csvText.split(/\r?\n/).filter(Boolean);
   if (lines.length < 2) {
-    return [];
+    return { rows: [], fields: DEFAULT_FIELDS };
   }
 
-  return lines
+  const headers = parseCsvLine(lines[0]);
+  const fields = buildFieldsFromHeader(headers);
+
+  const parsedRows = lines
     .slice(1)
     .map(parseCsvLine)
-    .map(mapToRow)
+    .map((values) => mapToRow(values, fields))
     .filter((row) => row.fromStationName && row.toStationName);
+
+  return { rows: parsedRows, fields };
+}
+
+function buildFieldsFromHeader(headers) {
+  const usedKeys = new Set();
+
+  return headers.map((header, index) => {
+    const safeLabel = header || `Column ${index + 1}`;
+    const key = ensureUniqueKey(resolveFieldKey(safeLabel, index), index, usedKeys);
+    return [key, safeLabel];
+  });
+}
+
+function resolveFieldKey(header, index) {
+  if (index === 0) {
+    return "fromStationNumber";
+  }
+  if (index === 1) {
+    return "fromStationName";
+  }
+  if (index === 2) {
+    return "toStationNumber";
+  }
+  if (index === 3) {
+    return "toStationName";
+  }
+
+  const normalizedHeader = normalizeHeader(header);
+  return HEADER_KEY_BY_NORMALIZED.get(normalizedHeader) || `col${index + 1}`;
+}
+
+function ensureUniqueKey(baseKey, index, usedKeys) {
+  if (!usedKeys.has(baseKey)) {
+    usedKeys.add(baseKey);
+    return baseKey;
+  }
+
+  const uniqueKey = `${baseKey}_${index + 1}`;
+  usedKeys.add(uniqueKey);
+  return uniqueKey;
+}
+
+function buildHeaderKeyMap() {
+  const map = new Map();
+
+  Object.entries(HEADER_ALIASES).forEach(([key, aliases]) => {
+    aliases.forEach((alias) => {
+      map.set(normalizeHeader(alias), key);
+    });
+  });
+
+  return map;
+}
+
+function normalizeHeader(value) {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
 function parseCsvLine(line) {
@@ -120,10 +208,10 @@ function parseCsvLine(line) {
   return result;
 }
 
-function mapToRow(values) {
+function mapToRow(values, fields) {
   const row = {};
-  for (let i = 0; i < CANONICAL_FIELDS.length; i += 1) {
-    const key = CANONICAL_FIELDS[i][0];
+  for (let i = 0; i < fields.length; i += 1) {
+    const key = fields[i][0];
     row[key] = values[i] || "";
   }
   return row;
@@ -204,7 +292,7 @@ function showRow(row, isReverse) {
     addResultRow("Note", "Reverse route displayed");
   }
 
-  CANONICAL_FIELDS.forEach(([key, label]) => {
+  activeFields.forEach(([key, label]) => {
     if (IGNORED_FIELDS.has(key)) {
       return;
     }
