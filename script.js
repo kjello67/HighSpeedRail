@@ -3,13 +3,9 @@ const CANONICAL_FIELDS = [
   ["fromStationName", "From station"],
   ["toStationNumber", "To station number"],
   ["toStationName", "To station"],
-  ["timeBase", "Time base"],
-  ["margin50", "0,50"],
   ["time1", "Time1"],
-  ["timeAdd", "Time add"],
   ["time2", "Time2"],
-  ["blank10", "(blank)"],
-  ["distTicket", "Dist. ticket"],
+  ["blank6", "0"],
   ["ticketWo", "Ticket Wo"],
   ["ticketNw", "Ticket Nw"],
   ["service", "Serv."],
@@ -23,7 +19,7 @@ const IGNORED_FIELDS = new Set([
   "fromStationName",
   "toStationNumber",
   "toStationName",
-  "blank10"
+  "blank6"
 ]);
 
 const DEFAULT_CSV_PATH = "./data/HsrTimeDist.csv";
