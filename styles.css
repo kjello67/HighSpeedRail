@@ -1,8 +1,4 @@
 :root {
-  --bg: #0f2d46;
-  --bg-top: #1f4f73;
-  --bg-mid: #2f6b8f;
-  --bg-bottom: #78a9b2;
   --surface: #ffffff;
   --text: #1c1e21;
   --muted: #65676b;
@@ -21,8 +17,6 @@
 body {
   margin: 0;
   color: var(--text);
-  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 45%, var(--bg-bottom) 100%);
-  background-attachment: fixed;
 }
 
 /* Keep a little air around cards while using a stronger background palette. */
