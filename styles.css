@@ -1,11 +1,24 @@
 :root {
-  font-family: Arial, Helvetica, sans-serif;
+  --bg: #f0f2f5;
+  --surface: #ffffff;
+  --text: #1c1e21;
+  --muted: #65676b;
+  --line: #e4e6eb;
+  --primary: #1877f2;
+  --primary-soft: #e7f3ff;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 6px 20px rgba(0, 0, 0, 0.06);
+  --radius: 12px;
+  font-family: "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  background: #f5f7fb;
-  color: #1d2433;
+  color: var(--text);
+  background: var(--bg);
 }
 
 .container {
@@ -15,25 +28,28 @@ body {
 }
 
 h1 {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .subtitle {
-  margin: 0 0 20px;
-  color: #4c5870;
+  margin: 0 0 18px;
+  color: var(--muted);
 }
 
 .card {
-  background: #fff;
-  border: 1px solid #dbe2ef;
-  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   padding: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .controls {
   display: grid;
-  gap: 12px;
+  gap: 12px 14px;
   grid-template-columns: 1fr 1fr;
 }
 
@@ -47,43 +63,77 @@ h1 {
   grid-column: 1 / -1;
 }
 
-select {
-  height: 36px;
-  border-radius: 8px;
-  border: 1px solid #cfd8ea;
-  padding: 0 10px;
-  font-size: 14px;
-  background: #fff;
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
 }
 
-input[type="file"] {
-  border: 1px solid #cfd8ea;
-  border-radius: 8px;
-  padding: 6px;
-  background: #fff;
+select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  background: var(--surface);
+  color: var(--text);
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.checkbox label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-weight: 500;
 }
 
 .status {
   margin: 4px 0 12px;
-  color: #4c5870;
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--line);
+}
+
+tbody tr:last-child {
+  border-bottom: none;
 }
 
 th,
 td {
   text-align: left;
-  padding: 8px;
-  border-bottom: 1px solid #ebf0fa;
+  padding: 11px 12px;
+  vertical-align: top;
 }
 
 th {
-  width: 40%;
-  color: #30405f;
+  width: 42%;
   font-weight: 600;
+  color: var(--muted);
+  background: #fafbfc;
+}
+
+td {
+  font-weight: 500;
 }
 
 .hidden {
