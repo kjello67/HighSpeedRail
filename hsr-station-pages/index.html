@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HSR Station Lookup</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="container">
+    <h1>HSR Station Lookup</h1>
+    <p class="subtitle">Select from/to station to show route values from the CSV row.</p>
+
+    <section class="card controls">
+
+      <div class="field">
+        <label for="fromStation">From station</label>
+        <select id="fromStation" disabled>
+          <option>Loading stations...</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="toStation">To station</label>
+        <select id="toStation" disabled>
+          <option>Loading stations...</option>
+        </select>
+      </div>
+
+      <div class="field full checkbox">
+        <label for="showReverse">
+          <input type="checkbox" id="showReverse">
+          If exact route is missing, try reverse route
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Route details</h2>
+      <p id="status" class="status">Loading bundled CSV...</p>
+      <table id="resultTable" class="hidden">
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

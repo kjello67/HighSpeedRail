@@ -1,0 +1,98 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f5f7fb;
+  color: #1d2433;
+}
+
+.container {
+  max-width: 860px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+h1 {
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  margin: 0 0 20px;
+  color: #4c5870;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #dbe2ef;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.controls {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+select {
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #cfd8ea;
+  padding: 0 10px;
+  font-size: 14px;
+  background: #fff;
+}
+
+input[type="file"] {
+  border: 1px solid #cfd8ea;
+  border-radius: 8px;
+  padding: 6px;
+  background: #fff;
+}
+
+.status {
+  margin: 4px 0 12px;
+  color: #4c5870;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ebf0fa;
+}
+
+th {
+  width: 40%;
+  color: #30405f;
+  font-weight: 600;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+}
+

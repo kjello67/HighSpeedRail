@@ -1,0 +1,8 @@
+# Optional local data files
+*.csv
+!data/HsrTimeDist.csv
+
+# Keep git clean
+.DS_Store
+Thumbs.db
+
